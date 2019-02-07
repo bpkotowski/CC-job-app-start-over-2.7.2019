@@ -13,24 +13,29 @@ formNode.addEventListener('submit', function(event) {
 // create object
     const applicant = {
         firstNameKey: firstName,
-        lastNameKey: lastName,
+        lastNameKey: lastName
     }
-    // store applicant in local storage
-    const applicantJSON = JSON.stringify(applicant);
-    window.localStorage.setItem('applicant', applicantJSON); // could be "bananas"
+    let applicants = null; //or [] without else
+    // check to see if applicants exists in local storage
+    const existingApplicantsJSON = window.localStorage.getItem('applicants');
+     
+    if(existingApplicantsJSON) {
+        //if yes - parse and assign to applicants array
+        applicants = JSON.parse(existingApplicantsJSON);
+    //  console.log(applicantJSON);
+    }
+     //if no applicants in local storage
+    else {
+        applicants = [];
+    }
+    
+    applicants.push(applicant);
+    
+    //store applicants to local storage
+    const newApplicantJSON = JSON.stringify(applicants);
+    window.localStorage.setItem('applicants', newApplicantJSON);
+    
 });
 
-let applicants = null; //or [] without else
-// check to see if applicants exists in local storage
-const applicantJSON = window.localStorage.getItem('applicants')
- 
-if(applicantJSON) {
-    //if yes - parse and assign to applicants array
-    applicants = JSON.parse(applicantJSON);
- console.log(applicantJSON);
-}
- //if no applicants in local storsge
-else {
-    applicants = [];
-}
+
 
